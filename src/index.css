@@ -1,0 +1,32 @@
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    font-size: 1.6rem;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+}
+
+h1 {
+    font-size: 3.6rem;
+}
+
+#container {
+    border: 5px outset black;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.tasks, #todo-form {
+    border: 1px solid red;
+    height: 100vh;
+    width: 50%;
+}
+
+.task {
+    border: 1px solid black;
+    text-align: center;
+}
