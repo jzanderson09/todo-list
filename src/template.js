@@ -1,3 +1,5 @@
 import './template.css';
+import { generateListDisplay } from './todoList';
 
-console.log('Your Todo List is live and running!');
+const container = document.querySelector('.container');
+container.append(generateListDisplay());

@@ -1,0 +1,7 @@
+1. Establish Todo, Project and task classes. 
+Log output to the console.
+
+2. Connect the back-end to the front end and
+show results.
+
+3. Style page.

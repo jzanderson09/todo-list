@@ -1,5 +1,42 @@
-* {
+/* :root {
+    --custom-properties:
+} */
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    font-size: 1.4rem;
+    margin: 0;
+    padding: 0;
+}
+
+html {
     background-color: black;
+    box-sizing: border-box;
     color: white;
+    font-size: 62.5%;
     text-align: center;
+}
+
+.container {
+    border: 1px solid red;
+    height: 99vh;
+    width: 100vw;
+}
+
+.todo-list {
+    border: 1px solid green;
+    border-radius: 2%;
+    height: 100%;
+    margin: 1%;
+    width: 45%;
+}
+
+.task {
+    border: 1px outset purple;
+    border-radius: 25%;
+    margin: 1%;
+    padding: 1%;
+    width: auto;
 }
