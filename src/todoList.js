@@ -1,7 +1,6 @@
 function createTodoList(name) {
-    const tasks = [];
-
-    return {
+    let tasks = [];
+    const todoList = {
         name,
         tasks,
         addTask(newTask) {
@@ -11,6 +10,8 @@ function createTodoList(name) {
             return tasks;
         }
     };
+    console.table(todoList);
+    return todoList;
 }
 
 function createTask(title, description, dueDate, priority, notes) {
@@ -32,8 +33,9 @@ function createProject(projectName, projectTasks) {
     };
 }
 
+// Only run at initial render (initial todo list):
 function generateTodoList() {
-    const myTodoList = createTodoList('default');
+    const todoList = createTodoList('default');
 
     const firstTask = createTask('Clean the House', 
         'Clean the kitchen, bathrooms and garage', 
@@ -56,9 +58,9 @@ function generateTodoList() {
         'Use The Odin Project & and A.I. when stuck!'
     );
 
-    [firstTask, secondTask, thirdTask].forEach(currentTask => myTodoList.addTask(currentTask));
+    [firstTask, secondTask, thirdTask].forEach(currentTask => todoList.addTask(currentTask));
 
-    return myTodoList;
+    return todoList;
 }
 
 export function generateListDisplay() {
@@ -74,28 +76,37 @@ export function generateListDisplay() {
     taskDivBoiler.className = 'task';
     taskTitleBoiler.className = 'title';
     taskDescriptionBoiler.className = 'description';
-    taskDateBoiler.className = 'date';
+    taskDateBoiler.className = 'due-date';
     taskPriorityBoiler.className = 'priority';
     taskNotesBoiler.className = 'notes';
 
-    const myList = generateTodoList();
-    const myTasks = myList.getTasks();
+    const myTodoList = generateTodoList();
+    const myTasks = myTodoList.getTasks();
+
+    //for each back-end task, append the front-end data:
     myTasks.forEach(task => {
         let taskDiv = taskDivBoiler.cloneNode();
+        taskDiv.id = myTasks.indexOf(task);
+
         let title = taskTitleBoiler.cloneNode();
         let description = taskDescriptionBoiler.cloneNode();
         let dueDate = taskDateBoiler.cloneNode();
         let priority = taskPriorityBoiler.cloneNode();
         let notes = taskNotesBoiler.cloneNode();
-        
-        title.textContent = task.title;
-        description.textContent = task.description;
-        dueDate.textContent = task.dueDate;
-        priority.textContent = task.priority;
-        notes.textContent = task.notes;
+
+        title.textContent = `Title: ${task.title}`;
+        description.textContent = `Description: ${task.description}`;
+        dueDate.textContent = `Due By: ${task.dueDate}`;
+        priority.textContent = `Priority Level: ${task.priority}`;
+        notes.textContent = `Notes: ${task.notes}`;
 
         taskDiv.append(title, description, dueDate, priority, notes);
+        taskDiv.addEventListener('click', event => toggleTask(event.currentTarget));
         todoListDiv.append(taskDiv);
     });
     return todoListDiv;
+}
+
+function toggleTask(clickedTask) {
+    clickedTask.className === 'task completed' ? clickedTask.className = 'task' : clickedTask.className = 'task completed';
 }
