@@ -7,6 +7,16 @@
 //     };
 // }
 
+function createTask(title, description, dueDate, priority, notes) {
+    return {
+        title,
+        description,
+        dueDate,
+        priority,
+        notes
+    };
+}
+
 function createTodoList(name) {
     let tasks = [];
     const todoList = {
@@ -19,18 +29,7 @@ function createTodoList(name) {
             return tasks;
         }
     };
-    console.table(todoList);
     return todoList;
-}
-
-function createTask(title, description, dueDate, priority, notes) {
-    return {
-        title,
-        description,
-        dueDate,
-        priority,
-        notes
-    };
 }
 
 // Initial dummy todo list:
@@ -63,7 +62,88 @@ function initialTodoList() {
     return todoList;
 }
 
+function generateCompleted() {
+    const completedDiv = document.createElement('div');
+    const completedHeader = document.createElement('h3');
+    completedDiv.classList.add('completed', 'display-div');
+    completedHeader.classList.add('div-header');
+    completedHeader.textContent = 'Completed:';
+    completedDiv.appendChild(completedHeader);
+    return completedDiv;
+}
+
+//Generate todoListDiv, projectsDiv, completedDiv, formDiv:
+export function generateDisplay() {
+    const todo = generateTodoList(initialTodoList().getTasks());
+    const projects = generateProjects();
+    const completed = generateCompleted();
+    const form = generateForm();
+
+    return [form, todo, projects, completed];
+}
+
+function generateForm() {
+    const formDiv = document.createElement('div');
+    const formHeader = document.createElement('h3');
+    const formData = document.createElement('form');
+
+    formDiv.classList.add('form', 'display-div');
+    formHeader.classList.add('div-header');
+    formData.classList.add('form-data');
+
+    formHeader.textContent = 'Form:';
+
+    const formTitle = document.createElement('input');
+    formTitle.setAttribute('type', 'text');
+    formTitle.setAttribute('name', 'title');
+    formTitle.setAttribute('placeholder', 'Title');
+    formTitle.required = true;
+
+    const formDescription = document.createElement('input');
+    formDescription.setAttribute('type', 'text');
+    formDescription.setAttribute('name', 'description');
+    formDescription.setAttribute('placeholder', 'Description');
+    formDescription.required = true;
+
+    const formDueDate = document.createElement('input');
+    formDueDate.setAttribute('type', 'text');
+    formDueDate.setAttribute('name', 'due-date');
+    formDueDate.setAttribute('placeholder', 'Due Date');
+    formDueDate.required = true;
+
+    const formPriority = document.createElement('input');
+    formPriority.setAttribute('type', 'text');
+    formPriority.setAttribute('name', 'priority');
+    formPriority.setAttribute('placeholder', 'Priority');
+    formPriority.required = true;
+
+    const formNotes = document.createElement('input');
+    formNotes.setAttribute('type', 'text');
+    formNotes.setAttribute('name', 'notes');
+    formNotes.setAttribute('placeholder', 'Notes');
+    formNotes.required = true;
+
+    const addTask = document.createElement('button');
+    addTask.textContent = 'Add Task';
+    addTask.classList.add('add-task');
+
+    formData.append(formTitle, formDescription, formDueDate, formPriority, formNotes, addTask);
+    formDiv.append(formHeader, formData);
+    return formDiv;
+}
+
+function generateProjects() {
+    const projectsDiv = document.createElement('div');
+    projectsDiv.classList.add('projects', 'display-div');
+    const projectHeader = document.createElement('h3');
+    projectHeader.classList.add('div-header');
+    projectHeader.textContent = 'Projects:';
+    projectsDiv.appendChild(projectHeader);
+    return projectsDiv;
+}
+
 function generateTodoList(tasksArr) {
+    const todoHeader = document.createElement('h3');
     const todoListDiv = document.createElement('div');
     const taskDivBoiler = document.createElement('div');
     const taskTitleBoiler = document.createElement('h3');
@@ -72,13 +152,17 @@ function generateTodoList(tasksArr) {
     const taskPriorityBoiler = document.createElement('p');
     const taskNotesBoiler = document.createElement('p');
 
-    todoListDiv.className = 'todo-list';
-    taskDivBoiler.className = 'task';
-    taskTitleBoiler.className = 'title';
-    taskDescriptionBoiler.className = 'description';
-    taskDateBoiler.className = 'due-date';
-    taskPriorityBoiler.className = 'priority';
-    taskNotesBoiler.className = 'notes';
+    todoHeader.classList.add('div-header');
+    todoListDiv.classList.add('todo-list', 'display-div');
+    taskDivBoiler.classList.add('task');
+    taskTitleBoiler.classList.add('title');
+    taskDescriptionBoiler.classList.add('description');
+    taskDateBoiler.classList.add('due-date');
+    taskPriorityBoiler.classList.add('priority');
+    taskNotesBoiler.classList.add('notes');
+
+    todoHeader.textContent = 'Todo List:';
+    todoListDiv.appendChild(todoHeader);
 
     //for each back-end task, append the front-end data:
     tasksArr.forEach(task => {
@@ -93,33 +177,17 @@ function generateTodoList(tasksArr) {
 
         title.textContent = `Title: ${task.title}`;
         description.textContent = `Description: ${task.description}`;
-        dueDate.textContent = `Due By: ${task.dueDate}`;
+        dueDate.textContent = `Due Date: ${task.dueDate}`;
         priority.textContent = `Priority Level: ${task.priority}`;
         notes.textContent = `Notes: ${task.notes}`;
 
         taskDiv.append(title, description, dueDate, priority, notes);
         taskDiv.addEventListener('click', event => toggleTask(event.currentTarget));
-        todoListDiv.append(taskDiv);
+        todoListDiv.appendChild(taskDiv);
     });
     return todoListDiv;
 }
 
-function generateProjects() {
-    const projectsDiv = document.createElement('div');
-    projectsDiv.className = 'projects';
-    return projectsDiv;
-}
-
-//Generate todoListDiv, projectsDiv, completedDiv, formDiv:
-export function generateDisplay() {
-    const initialTodo = initialTodoList().getTasks();
-    console.log(initialTodo);
-    const todoDiv = generateTodoList(initialTodo);
-    const projectsDiv = generateProjects();
-
-    return [todoDiv, projectsDiv];
-}
-
 function toggleTask(clickedTask) {
-    clickedTask.className === 'task completed' ? clickedTask.className = 'task' : clickedTask.className = 'task completed';
+    clickedTask.classList.contains('done') ? clickedTask.classList.remove('done') : clickedTask.classList.add('done');
 }
