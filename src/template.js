@@ -1,5 +1,6 @@
 import './template.css';
-import { generateListDisplay } from './todoList';
+import { generateDisplay } from './todoList';
 
 const container = document.querySelector('.container');
-container.append(generateListDisplay());
+const displayDivs = generateDisplay();
+displayDivs.forEach(displayDiv => container.appendChild(displayDiv));
