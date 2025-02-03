@@ -72,15 +72,20 @@ function generateCompleted() {
     return completedDiv;
 }
 
-//Generate todoListDiv, projectsDiv, completedDiv, formDiv:
+//Generate formDiv, todoListDiv, projectsDiv, completedDiv:
 export function generateDisplay() {
+    const form = generateForm();
     const todo = generateTodoList(initialTodoList().getTasks());
     const projects = generateProjects();
     const completed = generateCompleted();
-    const form = generateForm();
 
     return [form, todo, projects, completed];
 }
+
+// function generateTaskContainer() {
+//     const taskGrid = document.createElement('div');
+
+// }
 
 function generateForm() {
     const formDiv = document.createElement('div');
@@ -94,40 +99,44 @@ function generateForm() {
     formHeader.textContent = 'Form:';
 
     const formTitle = document.createElement('input');
-    formTitle.setAttribute('type', 'text');
-    formTitle.setAttribute('name', 'title');
-    formTitle.setAttribute('placeholder', 'Title');
+    formTitle.name = 'title';
+    formTitle.placeholder = 'Title';
     formTitle.required = true;
+    formTitle.type = 'text';
 
     const formDescription = document.createElement('input');
-    formDescription.setAttribute('type', 'text');
-    formDescription.setAttribute('name', 'description');
-    formDescription.setAttribute('placeholder', 'Description');
+    formDescription.name = 'description';
+    formDescription.placeholder = 'Description';
     formDescription.required = true;
+    formDescription.type = 'text';
 
     const formDueDate = document.createElement('input');
-    formDueDate.setAttribute('type', 'text');
-    formDueDate.setAttribute('name', 'due-date');
-    formDueDate.setAttribute('placeholder', 'Due Date');
+    formDueDate.addEventListener('DOMContentLoaded', roundMinutes(formDueDate));
+    formDueDate.name = 'due-date';
     formDueDate.required = true;
+    formDueDate.type = 'datetime-local';
 
     const formPriority = document.createElement('input');
-    formPriority.setAttribute('type', 'text');
-    formPriority.setAttribute('name', 'priority');
-    formPriority.setAttribute('placeholder', 'Priority');
+    formPriority.name = 'priority';
+    formPriority.id = 'priority-level';
     formPriority.required = true;
+    formPriority.type = 'range';
+
+    const priorityLabel = document.createElement('label');
+    priorityLabel.setAttribute('for', 'priority');
+    priorityLabel.textContent = 'Priority';
 
     const formNotes = document.createElement('input');
-    formNotes.setAttribute('type', 'text');
-    formNotes.setAttribute('name', 'notes');
-    formNotes.setAttribute('placeholder', 'Notes');
+    formNotes.name = 'notes';
+    formNotes.placeholder = 'Notes';
     formNotes.required = true;
+    formNotes.type = 'text';
 
     const addTask = document.createElement('button');
+    addTask.classList.add('add-task-btn');
     addTask.textContent = 'Add Task';
-    addTask.classList.add('add-task');
 
-    formData.append(formTitle, formDescription, formDueDate, formPriority, formNotes, addTask);
+    formData.append(formTitle, formDescription, formDueDate, priorityLabel, formPriority, formNotes, addTask);
     formDiv.append(formHeader, formData);
     return formDiv;
 }
@@ -146,7 +155,7 @@ function generateTodoList(tasksArr) {
     const todoHeader = document.createElement('h3');
     const todoListDiv = document.createElement('div');
     const taskDivBoiler = document.createElement('div');
-    const taskTitleBoiler = document.createElement('h3');
+    const taskTitleBoiler = document.createElement('h4');
     const taskDescriptionBoiler = document.createElement('p');
     const taskDateBoiler = document.createElement('p');
     const taskPriorityBoiler = document.createElement('p');
@@ -186,6 +195,15 @@ function generateTodoList(tasksArr) {
         todoListDiv.appendChild(taskDiv);
     });
     return todoListDiv;
+}
+
+function roundMinutes(formInput) {
+    const now = new Date();
+    let currentMinutes = Math.round(now.getMinutes() / 15) * 15;
+    now.setMinutes(currentMinutes);
+    now.setSeconds(0);
+    now.setMilliseconds(0);
+    formInput.value = new Date(now - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);;
 }
 
 function toggleTask(clickedTask) {

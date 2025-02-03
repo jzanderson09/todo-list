@@ -1,19 +1,25 @@
 :root {
+    --container-background-color: #00000015;
+    --completed-background-color: #00000025;
+    --form-border-color: 3px solid #000000;
     --header-text-color: #1c2833;
-    --main-background-color: #5b9bd590;
-    --main-border-color: 2px outset #2c3e50;
-    --main-text-color: #2c3e50;
+    --input-border-radius: 10%;
+    --html-background-color: #5b9bd590;
+    --html-border-color: 2px outset #2c3e50;
+    --html-text-color: #2c3e50;
+    --projects-border-color: 3px solid #00000050;
     --task-background-color: #ffffff;
     --task-border-color: 3px outset #708090;
     --task-completed-background-color: #000095;
+    --todo-border-color: #00000075;
 
     font-size: 62.5%;
 }
 
 html {
-    background-color: var(--main-background-color);
+    background-color: var(--html-background-color);
     box-sizing: border-box;
-    color: var(--main-text-color);
+    color: var(--html-text-color);
     font-size: 1.6rem;
     text-align: center;
 }
@@ -27,30 +33,52 @@ header {
     width: 100%;
 }
 
-header h1 {
+div {
+    box-shadow: 2px 2px 2px 2px black;
+}
+
+h1 {
     font-size: 4rem;
     margin: 1%;
     padding: 0;
 }
 
-div {
-    box-shadow: 1px 1px 1px 1px black;
+h3 {
+    font-size: 2.4rem;
+}
+
+h4 {
+    font-size: 2.2rem;
+}
+
+input {
+    border: 3px inset black;
+    border-radius: var(--input-border-radius);
+    box-shadow: 2px 2px 2px 2px black;
+    height: 4vh;
+    padding: 5%;
+    width: 90%;
 }
 
 .container {
-    background-color: #00000015;
-    border: var(--main-border-color);
+    background-color: var(--container-background-color);
+    border: var(--html-border-color);
     border-radius: 10px;
     box-shadow: 1px 1px 1px 1px black;
     display: grid;
     font-size: 1.6rem;
-    gap: 1em;
-    grid-template: 1fr / repeat(4, 1fr);
-    grid-template-areas: "form todo-list projects completed";
-    height: 80vh;
+    gap: 1%;
+    grid-auto-flow: column;
+    grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+    grid-template-areas:
+        "form projects projects completed"
+        "form projects projects completed"
+        "form todo-list todo-list completed"
+        "form todo-list todo-list completed";
+    height: 83vh;
     margin: auto;
     padding: 1em;
-    width: 90%;
+    width: 98%;
 }
 
 .display-div {
@@ -58,33 +86,34 @@ div {
     border-radius: 2%;
     display: flex;
     flex-flow: column nowrap;
-    height: 98%;
-    margin: 0.5%;
-    overflow: scroll;
+    overflow: auto;
     padding: 1%;
 
+}
+
+.todo-list {
+    border: var(--html-border-color);
+    display: flex;
+    flex-flow: row wrap;
+    grid-area: todo-list;
+    /* height: 100%; */
 }
 
 .div-header {
     margin: 0;
     padding: 1%;
-}
-
-.todo-list {
-    border: var(--main-border-color);
-    grid-area: todo-list;
+    width: 100%;
 }
 
 .task {
     background-color: var(--task-background-color);
     border: var(--task-border-color);
     border-radius: 25%;
-    color: var(--main-text-color);
+    font-size: 1rem;
     font-weight: bolder;
     height: 24rem;
     margin: 1%;
-    padding: 1%;
-    width: 80%;
+    width: 30%;
 }
 
 .task > * {
@@ -98,17 +127,18 @@ div {
 }
 
 .projects {
-    border: 3px solid purple;
+    border: var(--projects-border-color);
     grid-area: projects;
+    /* height: 85%; */
 }
 
 .completed {
-    border: 3px solid yellow;
+    border: var(--completed-background-color);
     grid-area: completed;
 }
 
 .form {
-    border: 3px solid orange;
+    border: var(--form-border-color);
     grid-area: form;
 }
 
@@ -117,24 +147,16 @@ div {
     display: flex;
     flex-flow: column nowrap;
     gap: 2%;
-    justify-content: center;
     height: 90%;
+    justify-content: center;
     width: 90%;
 }
 
-input {
-    border: 3px inset black;
-    border-radius: 25%;
-    box-shadow: 2px 2px 2px 2px black;
-    height: 4vh;
-    width: 90%;
-}
-
-.add-task {
+.add-task-btn {
     background-color: #000095;   
-    border: 2px outset silver;
-    border-radius: 25%;
+    border: 5px outset silver;
+    border-radius: 10%;
     color: whitesmoke;
-    height: 5vh;
-    width: 5vw;
+    height: 10vh;
+    width: 20vw;
 }
