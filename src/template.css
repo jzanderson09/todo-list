@@ -96,7 +96,6 @@ input {
     display: flex;
     flex-flow: row wrap;
     grid-area: todo-list;
-    /* height: 100%; */
 }
 
 .div-header {
@@ -129,7 +128,6 @@ input {
 .projects {
     border: var(--projects-border-color);
     grid-area: projects;
-    /* height: 85%; */
 }
 
 .completed {
@@ -150,6 +148,19 @@ input {
     height: 90%;
     justify-content: center;
     width: 90%;
+}
+
+#priority-level {
+    box-shadow: none;
+}
+
+#priority-level, #priority-value {
+    margin: 0 auto;
+    padding: 0;
+}
+
+label {
+    margin: 1% auto 0;
 }
 
 .add-task-btn {

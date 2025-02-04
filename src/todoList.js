@@ -115,16 +115,27 @@ function generateForm() {
     formDueDate.name = 'due-date';
     formDueDate.required = true;
     formDueDate.type = 'datetime-local';
-
-    const formPriority = document.createElement('input');
-    formPriority.name = 'priority';
-    formPriority.id = 'priority-level';
-    formPriority.required = true;
-    formPriority.type = 'range';
-
+    
     const priorityLabel = document.createElement('label');
     priorityLabel.setAttribute('for', 'priority');
     priorityLabel.textContent = 'Priority';
+
+    const formPriorityLevel = document.createElement('input');
+    formPriorityLevel.id = 'priority-level';
+    formPriorityLevel.min = 1;
+    formPriorityLevel.max = 5;
+    formPriorityLevel.name = 'priority';
+    formPriorityLevel.required = true;
+    formPriorityLevel.type = 'range';
+    formPriorityLevel.value = 1;
+
+    const priorityValue = document.createElement('span');
+    priorityValue.id = 'priority-value';
+    priorityValue.textContent = 1;
+
+    formPriorityLevel.addEventListener('input', function() {
+        priorityValue.textContent = this.value;
+    });
 
     const formNotes = document.createElement('input');
     formNotes.name = 'notes';
@@ -136,7 +147,8 @@ function generateForm() {
     addTask.classList.add('add-task-btn');
     addTask.textContent = 'Add Task';
 
-    formData.append(formTitle, formDescription, formDueDate, priorityLabel, formPriority, formNotes, addTask);
+    formData.append(formTitle, formDescription, formDueDate, 
+    priorityLabel, formPriorityLevel, priorityValue, formNotes, addTask);
     formDiv.append(formHeader, formData);
     return formDiv;
 }
