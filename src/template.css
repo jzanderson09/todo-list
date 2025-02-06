@@ -11,6 +11,11 @@
     --task-background-color: #ffffff;
     --task-border-color: 3px outset #708090;
     --task-completed-background-color: #000095;
+    --task-priority-5: red;
+    --task-priority-4: orange;
+    --task-priority-3: yellow;
+    --task-priority-2: #9acd32;
+    --task-priority-1: green;
     --todo-border-color: #00000075;
 
     font-size: 62.5%;
@@ -119,6 +124,26 @@ label {
     height: 24rem;
     margin: 1%;
     width: 30%;
+}
+
+.task[priority-level='5'] {
+    background-color: var(--task-priority-5);
+}
+
+.task[priority-level='4'] {
+    background-color: var(--task-priority-4);
+}
+
+.task[priority-level='3'] {
+    background-color: var(--task-priority-3);
+}
+
+.task[priority-level='2'] {
+    background-color: var(--task-priority-2);
+}
+
+.task[priority-level='1'] {
+    background-color: var(--task-priority-1);
 }
 
 .task > * {

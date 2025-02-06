@@ -62,6 +62,8 @@ export function generateTodoList(tasksArr) {
         priority.textContent = `Priority Level ${task.priority}`;
         notes.textContent = `Notes: ${task.notes}`;
 
+        taskDiv.setAttribute('priority-level', task.priority);
+
         taskDiv.append(title, description, dueDate, priority, notes);
         taskDiv.addEventListener('click', event => toggleTask(event.currentTarget));
         todoListDiv.appendChild(taskDiv);
