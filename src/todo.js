@@ -33,7 +33,7 @@ export function generateTodoList(tasksArr) {
     const taskPriorityBoiler = document.createElement('p');
     const taskNotesBoiler = document.createElement('p');
 
-    todoHeader.classList.add('div-header');
+    todoHeader.classList.add('div-header', 'todo-header');
     todoListDiv.classList.add('todo-list', 'display-div');
     taskDivBoiler.classList.add('task');
     taskTitleBoiler.classList.add('title');
@@ -101,5 +101,15 @@ export function initialTodoList() {
 }
 
 function toggleTask(clickedTask) {
-    clickedTask.classList.toggle('done');
+    clickedTask.classList.toggle('selected');
+    const tasks = Array.from(document.querySelectorAll('.task'));
+    const selected = tasks.filter(task => task.classList.contains('selected'));
+    let todoHeader = document.querySelector('.todo-header');
+    if (selected.length) {
+        let tasksSelected = selected.length;
+        todoHeader.textContent = `Tasks (${tasksSelected} Selected):`
+    }
+    else {
+        todoHeader.textContent = 'Tasks:';
+    }
 }
