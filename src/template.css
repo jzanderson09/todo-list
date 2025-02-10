@@ -11,11 +11,11 @@
     --task-background-color: #ffffff;
     --task-border-color: 3px outset #708090;
     --task-completed-background-color: #000095;
-    --task-priority-5: red;
-    --task-priority-4: orange;
+    --task-priority-5: green;
+    --task-priority-4: #9acd32;
     --task-priority-3: yellow;
-    --task-priority-2: #9acd32;
-    --task-priority-1: green;
+    --task-priority-2: orange;
+    --task-priority-1: red;
     --todo-border-color: #00000075;
 
     font-size: 62.5%;
@@ -116,7 +116,7 @@ label {
 }
 
 .todo-header {
-    
+    align-self: flex-start;
 }
 
 .task {
@@ -132,29 +132,24 @@ label {
     width: 30%;
 }
 
-.task[priority-level='5'] {
-    background-color: var(--task-priority-5);
-}
-
-.task[priority-level='4'] {
-    background-color: var(--task-priority-4);
-}
-
-.task[priority-level='3'] {
-    background-color: var(--task-priority-3);
+.task[priority-level='1'] {
+    background-color: var(--task-priority-1);
 }
 
 .task[priority-level='2'] {
     background-color: var(--task-priority-2);
 }
 
-.task[priority-level='1'] {
-    background-color: var(--task-priority-1);
+.task[priority-level='3'] {
+    background-color: var(--task-priority-3);
 }
 
-.task:active {
-    transform: translateY(3px);
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+.task[priority-level='4'] {
+    background-color: var(--task-priority-4);
+}
+
+.task[priority-level='5'] {
+    background-color: var(--task-priority-5);
 }
 
 .task > * {
@@ -169,6 +164,35 @@ label {
 .projects {
     border: var(--projects-border-color);
     grid-area: projects;
+}
+
+.project-header {
+    font-size: 3rem;
+}
+
+.project {
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 5vh;
+    justify-content: center;
+    margin-top: 1%;
+    padding: 1%;
+    width: auto;
+}
+
+.task:active, .project:active, #add-project:active {
+    transform: translateY(3px);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+#add-project {
+    align-self: flex-end;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+    margin-right: 3%;
+    padding: 1%;
 }
 
 .completed {

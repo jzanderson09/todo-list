@@ -51,6 +51,17 @@ function generateForm() {
         updateSliderColor(this.value);
     });
 
+    const projectMenu = document.createElement('select');
+    projectMenu.id = 'project-menu';
+
+    const defaultProject = document.createElement('option');
+    defaultProject.id = 'default-project';
+    defaultProject.text = 'Todo';
+    defaultProject.value = 'Todo';
+    defaultProject.setAttribute('selected', true);
+
+    projectMenu.appendChild(defaultProject);
+
     const formNotes = document.createElement('input');
     formNotes.classList.add('form-input');
     formNotes.name = 'notes';
@@ -63,7 +74,8 @@ function generateForm() {
     addTask.textContent = 'Add Task';
 
     formData.append(formTitle, formDescription, formDueDate, 
-    priorityLabel, formPriorityLevel, priorityValue, formNotes, addTask);
+    priorityLabel, formPriorityLevel, priorityValue, projectMenu, 
+    formNotes, addTask);
     formDiv.append(formHeader, formData);
     return formDiv;
 }

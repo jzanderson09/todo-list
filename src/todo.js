@@ -1,38 +1,50 @@
-function createTask(title, description, dueDate, priority, notes) {
+function createTask(title, description, dueDate, priority, project, notes) {
     return {
         title,
         description,
         dueDate,
         priority,
+        project,
         notes
     };
 }
 
-function createTodoList(name) {
+function createTodoList(name, todoProject) {
     let tasks = [];
     const todoList = {
         name,
         tasks,
+        todoProject,
         addTask(newTask) {
             tasks.push(newTask);  
         },
         getTasks() {
             return tasks;
+        },
+        getProject() {
+            return todoProject;
+        },
+        setProject(newProject) {
+            todoProject = newProject;
         }
     };
     return todoList;
 }
 
-export function generateTodoList(tasksArr) {
-    const todoHeader = document.createElement('h3');
-    const todoListDiv = document.createElement('div');
-    const taskDivBoiler = document.createElement('div');
-    const taskTitleBoiler = document.createElement('h4');
-    const taskDescriptionBoiler = document.createElement('p');
-    const taskDateBoiler = document.createElement('p');
-    const taskPriorityBoiler = document.createElement('p');
-    const taskNotesBoiler = document.createElement('p');
+//creates elements in memory and returns div to render to front-end:
+export function generateTodoList(todoListArr) {
+ 
+    //Create boiler elements in memory:
+    let todoListDiv = document.createElement('div');
+    let todoHeader = document.createElement('h3');
+    let taskDivBoiler = document.createElement('div');
+    let taskTitleBoiler = document.createElement('h4');
+    let taskDescriptionBoiler = document.createElement('p');
+    let taskDateBoiler = document.createElement('p');
+    let taskPriorityBoiler = document.createElement('p');
+    let taskNotesBoiler = document.createElement('p');
 
+    //Add boiler classes:
     todoHeader.classList.add('div-header', 'todo-header');
     todoListDiv.classList.add('todo-list', 'display-div');
     taskDivBoiler.classList.add('task');
@@ -42,13 +54,14 @@ export function generateTodoList(tasksArr) {
     taskPriorityBoiler.classList.add('priority', 'task-info');
     taskNotesBoiler.classList.add('notes', 'task-info');
 
+    //Set header text and append to todo div:
     todoHeader.textContent = 'Tasks:';
     todoListDiv.appendChild(todoHeader);
 
-    //for each back-end task, append the front-end data:
-    tasksArr.forEach(task => {
+    //iterate tasks and add to front-end elements:
+    todoListArr.forEach(task => {
         let taskDiv = taskDivBoiler.cloneNode();
-        taskDiv.id = tasksArr.indexOf(task);
+        taskDiv.id = todoListArr.indexOf(task);
 
         let title = taskTitleBoiler.cloneNode();
         let description = taskDescriptionBoiler.cloneNode();
@@ -63,22 +76,25 @@ export function generateTodoList(tasksArr) {
         notes.textContent = `Notes: ${task.notes}`;
 
         taskDiv.setAttribute('priority-level', task.priority);
+        taskDiv.setAttribute('project', task.project);
 
         taskDiv.append(title, description, dueDate, priority, notes);
         taskDiv.addEventListener('click', event => toggleTask(event.currentTarget));
         todoListDiv.appendChild(taskDiv);
     });
+    console.log(todoListDiv);
     return todoListDiv;
 }
 
 // Initial dummy todo list:
 export function initialTodoList() {
-    const todoList = createTodoList('default');
+    const todoList = createTodoList('default', 'Todo');
 
     const firstTask = createTask('Clean the House', 
         'Clean the kitchen, bathrooms and garage', 
         '01/08/2025', 
-        2, 
+        2,
+        `${todoList.todoProject}`,
         'Make sure to use pledge and Mr. Clean!'
     );
 
@@ -86,6 +102,7 @@ export function initialTodoList() {
         'Buy fruits, veggies and grains',
         '01/10/2025',
         3,
+        `${todoList.todoProject}`,
         'Check ad for Safeway deals!'
     );
 
@@ -93,14 +110,17 @@ export function initialTodoList() {
         'Focus on HTML/CSS/JS and Python',
         '01/04/2025',
         1,
+        `${todoList.todoProject}`,
         'Use The Odin Project & and A.I. when stuck!'
     );
 
     [firstTask, secondTask, thirdTask].forEach(currentTask => todoList.addTask(currentTask));
+    console.table(todoList);
     return todoList;
 }
 
-function toggleTask(clickedTask) {
+// Toggles selected tasks and updates Task header:
+export function toggleTask(clickedTask) {
     clickedTask.classList.toggle('selected');
     const tasks = Array.from(document.querySelectorAll('.task'));
     const selected = tasks.filter(task => task.classList.contains('selected'));
