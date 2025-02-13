@@ -1,4 +1,6 @@
 :root {
+    --button-background-color: #000095;
+    --button-active-background-color: #000065;
     --container-background-color: #00000015;
     --completed-background-color: #00000025;
     --form-border-color: 3px solid #000000;
@@ -16,6 +18,7 @@
     --task-priority-3: yellow;
     --task-priority-2: orange;
     --task-priority-1: red;
+    --task-priority-1-text: whitesmoke;
     --todo-border-color: #00000075;
 
     font-size: 62.5%;
@@ -53,7 +56,8 @@ h3 {
 }
 
 h4 {
-    font-size: 2.2rem;
+    margin: 0;
+    font-size: 2rem;
 }
 
 input {
@@ -71,6 +75,29 @@ label {
     margin: 1% auto 0;
 }
 
+p {
+    margin: 0;
+}
+
+select {
+    background-color: #00000025;
+    border: 5px outset #00000085;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.6rem;
+    font-weight: bolder;
+    height: 5vh;
+    text-align: center;
+    transition: background-color 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
+    width: 75%;
+}
+
+select:hover {
+    color: whitesmoke;
+    background-color: #245975;
+}
+
 .container {
     background-color: var(--container-background-color);
     border: var(--html-border-color);
@@ -80,9 +107,11 @@ label {
     font-size: 1.6rem;
     gap: 1%;
     grid-auto-flow: column;
-    grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+    grid-template: repeat(6, 1fr) / repeat(4, 1fr);
     grid-template-areas:
         "form projects projects completed"
+        "form projects projects completed"
+        "form todo-list todo-list completed"
         "form todo-list todo-list completed"
         "form todo-list todo-list completed"
         "form todo-list todo-list completed";
@@ -96,7 +125,7 @@ label {
     align-items: center;
     border-radius: 2%;
     display: flex;
-    flex-flow: column nowrap;
+    flex-flow: column wrap;
     overflow: auto;
     padding: 1%;
 
@@ -106,98 +135,6 @@ label {
     margin: 0;
     padding: 1%;
     width: 100%;
-}
-
-.todo-list {
-    border: var(--html-border-color);
-    display: flex;
-    flex-flow: row wrap;
-    grid-area: todo-list;
-}
-
-.todo-header {
-    align-self: flex-start;
-}
-
-.task {
-    background-color: var(--task-background-color);
-    border: var(--task-border-color);
-    border-radius: 25%;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: bolder;
-    height: 24rem;
-    margin: 1%;
-    transition: transform 0.1s ease, box-shadow 0.1s ease;
-    width: 30%;
-}
-
-.task[priority-level='1'] {
-    background-color: var(--task-priority-1);
-}
-
-.task[priority-level='2'] {
-    background-color: var(--task-priority-2);
-}
-
-.task[priority-level='3'] {
-    background-color: var(--task-priority-3);
-}
-
-.task[priority-level='4'] {
-    background-color: var(--task-priority-4);
-}
-
-.task[priority-level='5'] {
-    background-color: var(--task-priority-5);
-}
-
-.task > * {
-    line-height: 1em;
-}
-
-.selected {
-    box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.8);
-    outline: 3px solid white;
-}
-
-.projects {
-    border: var(--projects-border-color);
-    grid-area: projects;
-}
-
-.project-header {
-    font-size: 3rem;
-}
-
-.project {
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    height: 5vh;
-    justify-content: center;
-    margin-top: 1%;
-    padding: 1%;
-    width: auto;
-}
-
-.task:active, .project:active, #add-project:active {
-    transform: translateY(3px);
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
-}
-
-#add-project {
-    align-self: flex-end;
-    border-radius: 10px;
-    box-shadow: 1px 1px 1px 1px black;
-    margin-right: 3%;
-    padding: 1%;
-}
-
-.completed {
-    border: var(--completed-background-color);
-    grid-area: completed;
 }
 
 .form {
@@ -259,7 +196,7 @@ label {
 }
 
 .add-task-btn {
-    background-color: #000095;   
+    background-color: var(--button-background-color);   
     border: 5px outset silver;
     border-radius: 10%;
     color: whitesmoke;
@@ -267,20 +204,184 @@ label {
     width: 100%;
 }
 
-.task {
-    height: 50%;
+.projects {
+    align-items: center;
+    border: var(--projects-border-color);
+    grid-area: projects;
+}
+
+.project-header {
+    font-size: 3rem;
+}
+
+.project-collection {
+    align-items: center;
+    box-shadow: none;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    margin: 2% auto;
+    width: 80%;
+}
+
+.project {
+    align-self: flex-start;
+    background-color: var(--button-background-color);
+    border: 5px solid #00000045;
+    border-radius: 10px;
+    cursor: pointer;
+    color: whitesmoke;
+    display: flex;
+    align-items: center;
+    height: 5vh;
+    justify-content: center;
+    margin: 1% 2% auto;
     padding: 1%;
-    width: 35%;
+    width: 20%;
+}
+
+.button-container {
+    align-items: flex-end;
+    box-shadow: none;
+    display: flex;
+    justify-content: flex-end;
+    height: 5vh;
+    padding: 1%;
+    width: 90%;
+}
+
+#add-project {
+    background-color: whitesmoke;
+    border: 5px outset white;
+    color: #000095;
+    height: 5vh;
+    width: 20%;
+}
+
+#add-project:active {
+    background-color: #000095;
+    color: whitesmoke;
+}
+
+.todo-list {
+    align-items: center;
+    border: var(--html-border-color);
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+    grid-area: todo-list;
+    justify-content: space-evenly;
+}
+
+.todo-header {
+    align-self: flex-start;
+}
+
+.task {
+    background-color: var(--task-background-color);
+    border: var(--task-border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    height: 39%;
+    padding: 1.1%;
+    text-shadow: 1px 1px 1px silver;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    width: 42%;
+}
+
+.task[priority-level='1'] {
+    background-color: var(--task-priority-1);
+    color: var(--task-priority-1-text);
+    text-shadow: 1px 1px 1px black;
+}
+
+.task[priority-level='2'] {
+    background-color: var(--task-priority-2);
+}
+
+.task[priority-level='3'] {
+    background-color: var(--task-priority-3);
+    text-shadow: 1px 1px 1px whitesmoke;
+}
+
+.task[priority-level='4'] {
+    background-color: var(--task-priority-4);
+}
+
+.task[priority-level='5'] {
+    background-color: var(--task-priority-5);
 }
 
 .task-info {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-style: italic;
-    line-height: 1.5rem;
-    padding: 1%;
+    font-weight: bolder;
+    line-height: 1.8rem;
+    padding: 2%;
     text-align: center;
 }
 
 .title {
     font-size: 2.4rem;
+}
+
+.selected {
+    box-shadow: 0 0 10px 4px rgba(255, 255, 255, 0.8);
+    outline: 3px solid white;
+}
+
+.project:active, #add-project:active, .task:active {
+    background-color: var(--button-active-background-color);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.3);
+    color: whitesmoke;
+    transform: translateY(3px);
+}
+
+.completed {
+    border: var(--completed-background-color);
+    grid-area: completed;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal > * {
+    box-shadow: 5px 5px 5px 5px black;
+    font-size: 2.5rem;
+    font-weight: bolder;
+}
+
+.visible {
+    align-items: center;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 2%;
+    justify-content: center;
+}
+
+.close-modal {
+    align-self: flex-end;
+    font-size: 2.5rem;
+    margin-right: 18%;
+}
+
+.modal-input {
+    background-color: white;
+    border: 5px outset silver;
+    border-radius: 10px;
+    padding: 2%;
+    text-align: center;
+    width: 60%;
+}
+
+.submit-project {
+    width: 40%;
 }

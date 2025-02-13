@@ -1,3 +1,5 @@
+
+
 function createTask(title, description, dueDate, priority, project, notes) {
     return {
         title,
@@ -9,12 +11,13 @@ function createTask(title, description, dueDate, priority, project, notes) {
     };
 }
 
-function createTodoList(name, todoProject) {
+export function createTodoList(name) {
     let tasks = [];
+    const todoProjects = [];
     const todoList = {
         name,
         tasks,
-        todoProject,
+        todoProjects,
         addTask(newTask) {
             tasks.push(newTask);  
         },
@@ -22,13 +25,19 @@ function createTodoList(name, todoProject) {
             return tasks;
         },
         getProject() {
-            return todoProject;
+            return todoProjects;
         },
-        setProject(newProject) {
-            todoProject = newProject;
+        addProject(newProject) {
+            todoProjects.push(newProject);
+            console.table(todoList);
         }
     };
+    todoList.addProject(name);
     return todoList;
+}
+
+export function updateTodoList() {
+
 }
 
 //creates elements in memory and returns div to render to front-end:
@@ -88,13 +97,13 @@ export function generateTodoList(todoListArr) {
 
 // Initial dummy todo list:
 export function initialTodoList() {
-    const todoList = createTodoList('default', 'Todo');
+    const todoList = createTodoList('Todo');
 
     const firstTask = createTask('Clean the House', 
         'Clean the kitchen, bathrooms and garage', 
         '01/08/2025', 
         2,
-        `${todoList.todoProject}`,
+        `${todoList.todoProjects[0]}`,
         'Make sure to use pledge and Mr. Clean!'
     );
 
@@ -102,7 +111,7 @@ export function initialTodoList() {
         'Buy fruits, veggies and grains',
         '01/10/2025',
         3,
-        `${todoList.todoProject}`,
+        `${todoList.todoProjects[0]}`,
         'Check ad for Safeway deals!'
     );
 
@@ -110,7 +119,7 @@ export function initialTodoList() {
         'Focus on HTML/CSS/JS and Python',
         '01/04/2025',
         1,
-        `${todoList.todoProject}`,
+        `${todoList.todoProjects[0]}`,
         'Use The Odin Project & and A.I. when stuck!'
     );
 

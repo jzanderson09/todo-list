@@ -24,7 +24,7 @@ function generateForm() {
 
     const formDueDate = document.createElement('input');
     formDueDate.classList.add('form-input');
-    formDueDate.addEventListener('DOMContentLoaded', roundMinutes(formDueDate));
+    formDueDate.addEventListener('load', roundMinutes(formDueDate));
     formDueDate.name = 'due-date';
     formDueDate.required = true;
     formDueDate.type = 'datetime-local';
@@ -72,17 +72,17 @@ function generateForm() {
     const addTask = document.createElement('button');
     addTask.classList.add('add-task-btn');
     addTask.textContent = 'Add Task';
-
+    
     formData.append(formTitle, formDescription, formDueDate, 
-    priorityLabel, formPriorityLevel, priorityValue, projectMenu, 
-    formNotes, addTask);
+        priorityLabel, formPriorityLevel, priorityValue, projectMenu, 
+        formNotes, addTask);
     formDiv.append(formHeader, formData);
     return formDiv;
 }
 
 function roundMinutes(formInput) {
     const now = new Date();
-    let currentMinutes = Math.round(now.getMinutes() / 15) * 15;
+    let currentMinutes = Math.round(now.getMinutes() / 15) * 15 + 30;
     now.setMinutes(currentMinutes);
     now.setSeconds(0);
     now.setMilliseconds(0);
